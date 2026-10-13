@@ -3,624 +3,538 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-
-<title>3DS Game Hub</title>
-<link rel="icon" href="./3ds-racer.ico">
-
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#e63946">
+<title>DS Game Hub</title>
 <style>
-:root {
-  color-scheme:dark;
-  --bg:#080e1d;
-  --panel:#101d32;
-  --panel2:#182b45;
-  --line:#34516c;
-  --accent:#40d9ff;
-  --text:#ecfaff;
-  --muted:#a0bad0;
-}
+  :root {
+    --red: #ff4458;
+    --bg: #08090e;
+    --panel: #13151f;
+    --border: #303341;
+    --text: #f5f5fa;
+    --muted: #a0a3b5;
+  }
 
-* {
-  box-sizing:border-box;
-}
+  * { box-sizing: border-box; }
 
-html,body {
-  margin:0;
-  height:100%;
-  overflow:hidden;
-}
-
-body {
-  background:radial-gradient(
-    ellipse at top,
-    #193457,
-    #080e1d 70%
-  );
-  color:var(--text);
-  font:14px system-ui,"Segoe UI",sans-serif;
-}
-
-button,input {
-  font:inherit;
-}
-
-button {
-  background:var(--panel2);
-  border:1px solid var(--line);
-  border-radius:10px;
-  color:var(--text);
-  padding:10px 15px;
-  cursor:pointer;
-}
-
-button:hover {
-  border-color:var(--accent);
-}
-
-button:disabled {
-  opacity:.45;
-  cursor:not-allowed;
-}
-
-.primary {
-  background:var(--accent);
-  color:#061322;
-  border-color:var(--accent);
-  font-weight:750;
-}
-
-.app {
-  display:flex;
-  flex-direction:column;
-  gap:10px;
-  max-width:1400px;
-  height:100dvh;
-  margin:auto;
-  padding:12px;
-  min-height:0;
-}
-
-header {
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:12px;
-  flex-shrink:0;
-  flex-wrap:wrap;
-}
-
-.brand {
-  display:flex;
-  align-items:center;
-  gap:12px;
-}
-
-.brand img {
-  width:49px;
-  height:49px;
-  object-fit:contain;
-  border-radius:11px;
-}
-
-h1 {
-  color:var(--accent);
-  font-size:clamp(19px,3vw,27px);
-  margin:0;
-}
-
-.subtitle {
-  color:var(--muted);
-  font-size:12px;
-}
-
-nav {
-  display:flex;
-  gap:8px;
-  flex-wrap:wrap;
-}
-
-nav button {
-  font-size:13px;
-}
-
-.workspace {
-  flex:1;
-  min-width:0;
-  min-height:0;
-  display:flex;
-}
-
-#screen {
-  position:relative;
-  flex:1;
-  min-width:0;
-  min-height:0;
-  overflow:hidden;
-  background:#000;
-  border:1px solid var(--line);
-  border-radius:16px;
-}
-
-#game {
-  width:100%;
-  height:100%;
-}
-
-#screen:fullscreen {
-  border:none;
-  border-radius:0;
-  width:100vw;
-  height:100vh;
-}
-
-#welcome {
-  position:absolute;
-  inset:0;
-  z-index:3;
-  background:radial-gradient(
-    circle at center,
-    #152d4d,
-    #070d19
-  );
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  padding:20px;
-}
-
-.welcome-content {
-  max-width:480px;
-  width:100%;
-  text-align:center;
-}
-
-.welcome-content img {
-  width:110px;
-  height:110px;
-  object-fit:contain;
-}
-
-.welcome-content h2 {
-  font-size:clamp(24px,5vw,33px);
-  color:var(--accent);
-  margin:12px 0;
-}
-
-.welcome-content p {
-  line-height:1.6;
-  color:var(--muted);
-}
-
-.pick-button {
-  display:inline-block;
-  margin:16px auto 0;
-  border:1px solid var(--accent);
-  background:var(--accent);
-  color:#061322;
-  padding:14px 24px;
-  border-radius:12px;
-  cursor:pointer;
-  font-weight:750;
-}
-
-.pick-button:hover {
-  filter:brightness(1.1);
-}
-
-#fileInput {
-  display:none;
-}
-
-#status {
-  color:var(--accent);
-  font-size:13px;
-  margin-top:14px;
-  overflow-wrap:anywhere;
-}
-
-.info {
-  border:1px solid var(--line);
-  border-radius:9px;
-  padding:9px;
-  font-size:12px;
-  color:var(--muted);
-  margin-top:17px;
-}
-
-footer {
-  flex-shrink:0;
-  display:flex;
-  justify-content:center;
-  gap:20px;
-  flex-wrap:wrap;
-  color:var(--muted);
-  font-size:11px;
-}
-
-footer strong {
-  color:var(--accent);
-}
-
-dialog {
-  width:min(540px,calc(100vw - 24px));
-  max-height:calc(100dvh - 30px);
-  background:var(--panel);
-  color:var(--text);
-  border:1px solid var(--line);
-  border-radius:16px;
-  padding:0;
-}
-
-dialog::backdrop {
-  background:#000c;
-}
-
-.modal-header {
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:10px;
-  border-bottom:1px solid var(--line);
-  padding:15px;
-}
-
-.modal-header h2 {
-  margin:0;
-  color:var(--accent);
-}
-
-.modal-body {
-  padding:17px;
-  overflow:auto;
-  max-height:70dvh;
-}
-
-.modal-body p {
-  color:var(--muted);
-  line-height:1.6;
-}
-
-.modal-body h3 {
-  color:var(--accent);
-}
-
-kbd {
-  display:inline-block;
-  background:var(--panel2);
-  border:1px solid var(--line);
-  border-radius:5px;
-  padding:3px 6px;
-}
-
-.hidden {
-  display:none!important;
-}
-
-@media(max-width:600px) {
-  .app {
-    padding:6px;
-    gap:6px;
+  body {
+    margin: 0;
+    min-height: 100vh;
+    background:
+      radial-gradient(ellipse at 50% -20%, #481720 0%, transparent 55%),
+      var(--bg);
+    color: var(--text);
+    font-family: system-ui, Segoe UI, Arial, sans-serif;
   }
 
   header {
-    justify-content:center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    flex-wrap: wrap;
+    padding: 18px 5%;
+    border-bottom: 1px solid #ffffff18;
+    background: #101119d9;
   }
 
-  nav {
-    justify-content:center;
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 13px;
   }
 
-  nav button {
-    padding:7px 10px;
-    font-size:12px;
+  .logo {
+    width: 48px;
+    height: 48px;
+    display: grid;
+    place-items: center;
+    border-radius: 13px;
+    background: linear-gradient(135deg, #ff5565, #a61530);
+    box-shadow: 0 0 24px #ff445844;
+    font-size: 20px;
+    font-weight: 900;
   }
 
-  .brand img {
-    width:36px;
-    height:36px;
+  h1 {
+    margin: 0;
+    font-size: 23px;
+    letter-spacing: -.6px;
   }
 
-  footer,.subtitle {
-    display:none;
+  .subtitle {
+    color: var(--muted);
+    font-size: 12px;
+    margin-top: 3px;
   }
-}
+
+  .actions {
+    display: flex;
+    gap: 9px;
+    flex-wrap: wrap;
+  }
+
+  button, .file-button {
+    border: 1px solid #ffffff22;
+    border-radius: 10px;
+    background: #242632;
+    color: white;
+    padding: 11px 16px;
+    font: inherit;
+    font-size: 13px;
+    font-weight: 650;
+    cursor: pointer;
+    transition: .15s;
+  }
+
+  button:hover, .file-button:hover {
+    border-color: var(--red);
+    background: #39303a;
+  }
+
+  .primary {
+    background: var(--red);
+    border-color: var(--red);
+    color: #fff;
+  }
+
+  .primary:hover { background: #e7354a; }
+
+  main {
+    width: min(1100px, 94%);
+    margin: 30px auto;
+  }
+
+  .status {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-bottom: 14px;
+    color: var(--muted);
+    font-size: 13px;
+  }
+
+  .dot {
+    display: inline-block;
+    width: 9px;
+    height: 9px;
+    background: #ffb94a;
+    border-radius: 50%;
+    margin-right: 8px;
+  }
+
+  .console {
+    background: linear-gradient(160deg, #252630, #12131a);
+    border: 1px solid #444551;
+    border-radius: 24px;
+    padding: 18px;
+    box-shadow: 0 22px 70px #0009;
+  }
+
+  .screen-bezel {
+    padding: 13px;
+    background: #050509;
+    border: 2px solid #454650;
+    border-radius: 16px;
+  }
+
+  #game {
+    width: 100%;
+    height: min(65vh, 620px);
+    min-height: 340px;
+    position: relative;
+    background: #07070c;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  #game canvas {
+    max-width: 100%;
+  }
+
+  .welcome {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    background:
+      radial-gradient(circle at center, #3b1823 0%, #09090f 70%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 22px;
+  }
+
+  .welcome.hidden { display: none; }
+
+  .welcome-inner { max-width: 430px; }
+
+  .ds-graphic {
+    width: 132px;
+    margin: 0 auto 23px;
+    padding: 10px;
+    border: 4px solid #a8a8b3;
+    border-radius: 13px;
+    background: #24252b;
+    box-shadow: 0 0 30px #ff445830;
+  }
+
+  .ds-screen {
+    height: 56px;
+    border: 5px solid #101116;
+    border-radius: 5px;
+    background: linear-gradient(135deg, #fb687c, #722338);
+  }
+
+  .hinge {
+    height: 9px;
+    border-radius: 3px;
+    background: #777984;
+    margin: 4px -6px;
+  }
+
+  .welcome h2 {
+    font-size: 28px;
+    margin: 0 0 10px;
+  }
+
+  .welcome p {
+    line-height: 1.65;
+    color: #c5c5d0;
+    font-size: 14px;
+  }
+
+  .file-button {
+    display: inline-block;
+    margin-top: 12px;
+    background: var(--red);
+    border-color: var(--red);
+    font-size: 15px;
+    padding: 13px 22px;
+  }
+
+  input[type=file] { display: none; }
+
+  .bottom-decoration {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px 9%;
+    color: #8a8c99;
+    font-size: 11px;
+    letter-spacing: 3px;
+  }
+
+  .speaker {
+    display: flex;
+    gap: 5px;
+  }
+
+  .speaker span {
+    display: block;
+    height: 5px;
+    width: 5px;
+    background: #555762;
+    border-radius: 50%;
+  }
+
+  .info {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 13px;
+    margin-top: 18px;
+  }
+
+  .tile {
+    background: #151720;
+    border: 1px solid #333542;
+    border-radius: 13px;
+    padding: 17px;
+  }
+
+  .tile h3 {
+    margin: 0 0 9px;
+    font-size: 14px;
+  }
+
+  .tile p {
+    margin: 0;
+    font-size: 12px;
+    line-height: 1.6;
+    color: var(--muted);
+  }
+
+  footer {
+    text-align: center;
+    padding: 26px;
+    color: #898b9a;
+    font-size: 12px;
+  }
+
+  dialog {
+    width: min(520px, 92vw);
+    border: 1px solid #51515e;
+    border-radius: 17px;
+    background: #1a1b25;
+    color: white;
+    padding: 25px;
+  }
+
+  dialog::backdrop { background: #000b; }
+
+  dialog h2 { margin-top: 0; }
+  dialog p, dialog li {
+    line-height: 1.65;
+    color: #cbccd8;
+    font-size: 14px;
+  }
+
+  .message {
+    display: none;
+    margin-top: 13px;
+    padding: 12px;
+    background: #3a2630;
+    color: #ffd1d8;
+    border-radius: 9px;
+    font-size: 13px;
+  }
+
+  @media (max-width: 700px) {
+    header { padding: 15px; }
+    main { margin-top: 15px; }
+    .info { grid-template-columns: 1fr; }
+    .console { padding: 10px; border-radius: 16px; }
+    .screen-bezel { padding: 7px; }
+    #game { min-height: 300px; height: 55vh; }
+    .welcome h2 { font-size: 23px; }
+  }
 </style>
 </head>
 
 <body>
+<header>
+  <div class="brand">
+    <div class="logo">DS</div>
+    <div>
+      <h1>DS Game Hub</h1>
+      <div class="subtitle">Your Nintendo DS. In your browser.</div>
+    </div>
+  </div>
 
-<div class="app">
+  <div class="actions">
+    <button onclick="document.getElementById('help').showModal()">Help</button>
+    <button onclick="location.reload()">Change Game</button>
+    <button onclick="goFullscreen()">Fullscreen</button>
+  </div>
+</header>
 
-  <header>
-    <div class="brand">
-      <img src="./3ds-racer.ico" alt="3DS Hub">
+<main>
+  <div class="status">
+    <span id="status"><span class="dot"></span>Waiting for a game</span>
+    <span id="gameName">Nintendo DS • DeSmuME</span>
+  </div>
 
-      <div>
-        <h1>3DS Game Hub</h1>
-        <div class="subtitle">
-          Nintendo 3DS · Browser Emulator
+  <div class="console">
+    <div class="screen-bezel">
+      <div id="game">
+        <div class="welcome" id="welcome">
+          <div class="welcome-inner">
+            <div class="ds-graphic" aria-hidden="true">
+              <div class="ds-screen"></div>
+              <div class="hinge"></div>
+              <div class="ds-screen"></div>
+            </div>
+            <h2>Ready, Player One?</h2>
+            <p>
+              Choose a Nintendo DS game file to start playing.
+              Your game file stays on your device.
+            </p>
+
+            <label class="file-button" for="romInput">
+              Choose DS Game
+            </label>
+            <input id="romInput" type="file" accept=".nds">
+
+            <div class="message" id="message"></div>
+
+            <p style="font-size:12px;margin-top:20px">
+              Supports .nds files
+            </p>
+          </div>
         </div>
       </div>
     </div>
 
-    <nav>
-      <button id="changeGame">Change Game</button>
-      <button id="helpButton">Help</button>
-      <button id="fullscreenButton">Fullscreen</button>
-    </nav>
-  </header>
-
-  <main class="workspace">
-    <div id="screen">
-      <div id="game"></div>
-
-      <div id="welcome">
-        <div class="welcome-content">
-
-          <img src="./3ds-racer.ico" alt="">
-
-          <h2>Your Games. Your Browser.</h2>
-
-          <p>
-            Choose a compatible Nintendo 3DS game file
-            to play directly in your browser.
-          </p>
-
-          <label for="fileInput" class="pick-button">
-            Choose 3DS Game
-          </label>
-
-          <input
-            id="fileInput"
-            type="file"
-            accept=".3ds,.cci,.cxi"
-          >
-
-          <div id="status" role="status">
-            Ready to select a game.
-          </div>
-
-          <div class="info">
-            Supports compatible .3ds, .cci and .cxi files.
-            Your selected game stays on this device.
-            No ROM is uploaded to the website.
-          </div>
-
-        </div>
+    <div class="bottom-decoration">
+      <div class="speaker">
+        <span></span><span></span><span></span>
+        <span></span><span></span>
+      </div>
+      <span>NINTENDO DS STYLE</span>
+      <div class="speaker">
+        <span></span><span></span><span></span>
+        <span></span><span></span>
       </div>
     </div>
-  </main>
-
-  <footer>
-    <span>System: <strong>Nintendo 3DS</strong></span>
-    <span>Game: <strong id="currentGame">None</strong></span>
-    <span>Engine: <strong>Azahar</strong></span>
-  </footer>
-
-</div>
-
-<!-- HELP WINDOW -->
-
-<dialog id="helpDialog">
-
-  <div class="modal-header">
-    <h2>Help & Controls</h2>
-    <button id="closeHelp">Close</button>
   </div>
 
-  <div class="modal-body">
-
-    <h3>Getting Started</h3>
-    <p>
-      Choose a compatible Nintendo 3DS game file.
-      Wait for the emulator to load.
-      Larger games may take longer to initialize.
-    </p>
-
-    <h3>Controls</h3>
-    <p>
-      Use the game's toolbar to configure keyboard
-      and controller buttons.
-      Compatible controllers may be detected automatically.
-    </p>
-
-    <h3>Saving</h3>
-    <p>
-      Save normally from inside your game.
-      Additional save tools may be available
-      through the game toolbar.
-    </p>
-
-    <h3>Performance</h3>
-    <p>
-      Nintendo 3DS emulation can be demanding.
-      Close unnecessary tabs if your game runs slowly.
-    </p>
-
-    <h3>Shortcuts</h3>
-    <p><kbd>Alt + Enter</kbd> Fullscreen</p>
-    <p><kbd>Esc</kbd> Exit fullscreen</p>
-
-    <h3>Compatibility</h3>
-    <p>
-      Decrypted, compatible game images are generally
-      required. Not every 3DS game will run correctly,
-      and performance depends on your device.
-    </p>
-
+  <div class="info">
+    <div class="tile">
+      <h3>🖥️ Dual-Screen Layouts</h3>
+      <p>
+        Use the emulator's core options to switch between
+        side-by-side, stacked, and hybrid layouts.
+      </p>
+    </div>
+    <div class="tile">
+      <h3>💾 Game Saves</h3>
+      <p>
+        Use the emulator toolbar for save states and
+        regular in-game saves. Keep backups of important saves.
+      </p>
+    </div>
+    <div class="tile">
+      <h3>🖱️ Touchscreen</h3>
+      <p>
+        Click the emulated lower screen with your mouse.
+        Use the emulator's controller settings to configure buttons.
+      </p>
+    </div>
   </div>
+</main>
+
+<footer>
+  DS Game Hub • Built with EmulatorJS • Bring your own game files
+</footer>
+
+<dialog id="help">
+  <h2>🎮 DS Game Hub Help</h2>
+  <p><strong>Loading games:</strong> Click Choose DS Game and select a .nds file from your device.</p>
+  <p><strong>Controls:</strong> Use the emulator's gamepad/settings toolbar to view or change keyboard and controller mappings.</p>
+  <p><strong>Touchscreen:</strong> Click on the lower DS screen using your mouse.</p>
+  <p><strong>Screen layouts:</strong> After starting a game, open the emulator's advanced/RetroArch menu, then find Quick Menu → Core Options → Screen Layout. Look for Left/Right (side by side), Top/Bottom (stacked), or Hybrid/Top (focus mode). The exact menu path may vary by core version.</p>
+  <p><strong>Saves:</strong> Save normally inside the game. The emulator also offers save states. Browser storage can be cleared, so keep backups if your progress matters.</p>
+  <p><strong>Changing games:</strong> Use Change Game to reload the page and select another file.</p>
+  <button class="primary" onclick="document.getElementById('help').close()">Got it!</button>
 </dialog>
 
 <script>
-"use strict";
+  const input = document.getElementById("romInput");
+  const welcome = document.getElementById("welcome");
+  const status = document.getElementById("status");
+  const nameLabel = document.getElementById("gameName");
+  const message = document.getElementById("message");
 
-const $ = id => document.getElementById(id);
+  let started = false;
+  let romUrl = null;
 
-let loaded = false;
-let gameURL = null;
-
-function status(message) {
-  $("status").textContent = message;
-}
-
-function hashGame(text) {
-  let hash = 2166136261;
-
-  for (let i = 0; i < text.length; i++) {
-    hash = Math.imul(
-      hash ^ text.charCodeAt(i),
-      16777619
-    );
-  }
-
-  return hash >>> 0;
-}
-
-async function fullscreen() {
-  try {
-    if (document.fullscreenElement) {
-      await document.exitFullscreen();
-    } else {
-      await $("screen").requestFullscreen();
+  function hashGame(text) {
+    let hash = 2166136261;
+    for (let i = 0; i < text.length; i++) {
+      hash ^= text.charCodeAt(i);
+      hash = Math.imul(hash, 16777619);
     }
-  } catch (error) {
-    alert("Fullscreen unavailable: " + error.message);
-  }
-}
-
-$("fullscreenButton").onclick = fullscreen;
-
-$("helpButton").onclick = () => {
-  $("helpDialog").showModal();
-};
-
-$("closeHelp").onclick = () => {
-  $("helpDialog").close();
-};
-
-$("changeGame").onclick = () => {
-  if (loaded && !confirm(
-    "Choose another game? Save your current progress first."
-  )) {
-    return;
+    return (hash >>> 0) || 1;
   }
 
-  if (loaded) {
-    location.reload();
-  } else {
-    $("fileInput").click();
-  }
-};
-
-document.addEventListener("keydown",event => {
-  if (event.altKey && event.key === "Enter") {
-    event.preventDefault();
-    fullscreen();
-  }
-});
-
-$("fileInput").addEventListener("change",async event => {
-
-  const file = event.target.files?.[0];
-
-  if (!file || loaded) return;
-
-  if (!/\.(3ds|cci|cxi)$/i.test(file.name)) {
-    status("Choose a .3ds, .cci or .cxi file.");
-    return;
+  function showMessage(text) {
+    message.style.display = "block";
+    message.textContent = text;
   }
 
-  if (
-    !window.crossOriginIsolated ||
-    typeof SharedArrayBuffer === "undefined"
-  ) {
-    status(
-      "The browser security settings required for " +
-      "3DS emulation are not active. Check the site's " +
-      "COOP and COEP headers."
+  function setStatus(text, color) {
+    status.textContent = text;
+    status.style.color = color || "#c9cad7";
+  }
+
+  input.addEventListener("change", function () {
+    const file = input.files && input.files[0];
+    if (!file) return;
+
+    if (!file.name.toLowerCase().endsWith(".nds")) {
+      showMessage("Please select a Nintendo DS .nds file.");
+      input.value = "";
+      return;
+    }
+
+    if (started) return;
+    started = true;
+
+    const name = file.name.replace(/\.nds$/i, "");
+    romUrl = URL.createObjectURL(file);
+
+    nameLabel.textContent = name;
+    setStatus("Loading Nintendo DS emulator...", "#ffd17a");
+
+    // EmulatorJS setup.
+    window.EJS_player = "#game";
+    window.EJS_core = "desmume2015";
+    window.EJS_gameName = name;
+
+    // Same file gets the same numerical ID between visits.
+    window.EJS_gameID = hashGame(
+      file.name.toLowerCase() + ":" + file.size
     );
-    return;
+
+    // Loads the selected local file; no ROM uploaded to Netlify.
+    window.EJS_gameUrl = romUrl;
+
+    window.EJS_pathtodata =
+      "https://cdn.emulatorjs.org/stable/data/";
+
+    window.EJS_startOnLoaded = true;
+    window.EJS_color = "#ff4458";
+    window.EJS_backgroundColor = "#08090e";
+
+    // DeSmuME does not need the extra melonDS BIOS files.
+    window.EJS_threads = false;
+
+    window.EJS_Buttons = {
+      settings: true,
+      gamepad: true,
+      volume: true,
+      mute: true,
+      fullscreen: true,
+      saveState: true,
+      loadState: true,
+      quickSave: true,
+      quickLoad: true,
+      screenshot: true,
+      playPause: true,
+      restart: true
+    };
+
+    // Remove the welcome overlay before EmulatorJS starts.
+    welcome.remove();
+
+    const script = document.createElement("script");
+    script.src = window.EJS_pathtodata + "loader.js";
+
+    script.onload = function () {
+      setStatus("Emulator loaded • starting game", "#96e6b4");
+    };
+
+    script.onerror = function () {
+      setStatus("Failed to load EmulatorJS", "#ff8795");
+      alert(
+        "The emulator couldn't load. Check your connection and reload the page."
+      );
+    };
+
+    document.body.appendChild(script);
+  });
+
+  function goFullscreen() {
+    const element = document.querySelector(".console");
+    if (!document.fullscreenElement) {
+      element.requestFullscreen?.().catch(() => {});
+    } else {
+      document.exitFullscreen?.();
+    }
   }
-
-  loaded = true;
-
-  const name = file.name.replace(/\.(3ds|cci|cxi)$/i,"");
-
-  status("Preparing " + name + "...");
-
-  gameURL = URL.createObjectURL(file);
-
-  $("currentGame").textContent = name;
-
-  /* =====================================
-     EMULATORJS CONFIGURATION
-     ===================================== */
-
-  window.EJS_player = "#game";
-
-  window.EJS_core = "3ds";
-
-  window.EJS_gameName = name;
-
-  window.EJS_gameID = hashGame(
-    file.name.toLowerCase() + ":" + file.size
-  );
-
-  window.EJS_gameUrl = gameURL;
-
-  /*
-    UPDATED:
-    Use nightly EmulatorJS files instead of stable.
-  */
-
-  window.EJS_pathtodata =
-    "https://cdn.emulatorjs.org/nightly/data/";
-
-  window.EJS_threads = true;
-
-  window.EJS_startOnLoaded = true;
-
-  window.EJS_color = "#40d9ff";
-
-  window.EJS_backgroundColor = "#080e1d";
-
-  window.EJS_Buttons = {
-    settings:true,
-    gamepad:true,
-    volume:true,
-    mute:true,
-    fullscreen:true,
-    saveState:true,
-    loadState:true,
-    quickSave:true,
-    quickLoad:true,
-    screenshot:true,
-    playPause:true,
-    restart:true
-  };
-
-  const script = document.createElement("script");
-
-  script.src =
-    window.EJS_pathtodata + "loader.js";
-
-  script.onload = () => {
-    $("welcome").classList.add("hidden");
-  };
-
-  script.onerror = () => {
-    loaded = false;
-
-    status(
-      "Unable to load EmulatorJS. " +
-      "Check your internet connection."
-    );
-  };
-
-  document.body.appendChild(script);
-
-});
 </script>
-
 </body>
 </html>
