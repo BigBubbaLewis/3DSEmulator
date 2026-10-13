@@ -4,8 +4,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
+
 <title>3DS Game Hub</title>
 <link rel="icon" href="./3ds-racer.ico">
+
 <style>
 :root {
   color-scheme:dark;
@@ -17,14 +19,31 @@
   --text:#ecfaff;
   --muted:#a0bad0;
 }
-* {box-sizing:border-box}
-html,body {margin:0;height:100%;overflow:hidden}
+
+* {
+  box-sizing:border-box;
+}
+
+html,body {
+  margin:0;
+  height:100%;
+  overflow:hidden;
+}
+
 body {
-  background:radial-gradient(ellipse at top,#193457,#080e1d 70%);
+  background:radial-gradient(
+    ellipse at top,
+    #193457,
+    #080e1d 70%
+  );
   color:var(--text);
   font:14px system-ui,"Segoe UI",sans-serif;
 }
-button,input {font:inherit}
+
+button,input {
+  font:inherit;
+}
+
 button {
   background:var(--panel2);
   border:1px solid var(--line);
@@ -33,14 +52,23 @@ button {
   padding:10px 15px;
   cursor:pointer;
 }
-button:hover {border-color:var(--accent)}
-button:disabled {opacity:.45;cursor:not-allowed}
+
+button:hover {
+  border-color:var(--accent);
+}
+
+button:disabled {
+  opacity:.45;
+  cursor:not-allowed;
+}
+
 .primary {
   background:var(--accent);
   color:#061322;
   border-color:var(--accent);
   font-weight:750;
 }
+
 .app {
   display:flex;
   flex-direction:column;
@@ -51,6 +79,7 @@ button:disabled {opacity:.45;cursor:not-allowed}
   padding:12px;
   min-height:0;
 }
+
 header {
   display:flex;
   justify-content:space-between;
@@ -59,31 +88,48 @@ header {
   flex-shrink:0;
   flex-wrap:wrap;
 }
+
 .brand {
   display:flex;
   align-items:center;
   gap:12px;
 }
+
 .brand img {
   width:49px;
   height:49px;
   object-fit:contain;
   border-radius:11px;
 }
+
 h1 {
   color:var(--accent);
   font-size:clamp(19px,3vw,27px);
   margin:0;
 }
-.subtitle {color:var(--muted);font-size:12px}
-nav {display:flex;gap:8px;flex-wrap:wrap}
-nav button {font-size:13px}
+
+.subtitle {
+  color:var(--muted);
+  font-size:12px;
+}
+
+nav {
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+}
+
+nav button {
+  font-size:13px;
+}
+
 .workspace {
   flex:1;
   min-width:0;
   min-height:0;
   display:flex;
 }
+
 #screen {
   position:relative;
   flex:1;
@@ -94,45 +140,57 @@ nav button {font-size:13px}
   border:1px solid var(--line);
   border-radius:16px;
 }
+
 #game {
   width:100%;
   height:100%;
 }
+
 #screen:fullscreen {
   border:none;
   border-radius:0;
   width:100vw;
   height:100vh;
 }
+
 #welcome {
   position:absolute;
   inset:0;
   z-index:3;
-  background:radial-gradient(circle at center,#152d4d,#070d19);
+  background:radial-gradient(
+    circle at center,
+    #152d4d,
+    #070d19
+  );
   display:flex;
   align-items:center;
   justify-content:center;
   padding:20px;
 }
+
 .welcome-content {
   max-width:480px;
   width:100%;
   text-align:center;
 }
+
 .welcome-content img {
   width:110px;
   height:110px;
   object-fit:contain;
 }
+
 .welcome-content h2 {
   font-size:clamp(24px,5vw,33px);
   color:var(--accent);
   margin:12px 0;
 }
+
 .welcome-content p {
   line-height:1.6;
   color:var(--muted);
 }
+
 .pick-button {
   display:inline-block;
   margin:16px auto 0;
@@ -144,14 +202,22 @@ nav button {font-size:13px}
   cursor:pointer;
   font-weight:750;
 }
-.pick-button:hover {filter:brightness(1.1)}
-#fileInput {display:none}
+
+.pick-button:hover {
+  filter:brightness(1.1);
+}
+
+#fileInput {
+  display:none;
+}
+
 #status {
   color:var(--accent);
   font-size:13px;
   margin-top:14px;
   overflow-wrap:anywhere;
 }
+
 .info {
   border:1px solid var(--line);
   border-radius:9px;
@@ -160,6 +226,7 @@ nav button {font-size:13px}
   color:var(--muted);
   margin-top:17px;
 }
+
 footer {
   flex-shrink:0;
   display:flex;
@@ -169,7 +236,11 @@ footer {
   color:var(--muted);
   font-size:11px;
 }
-footer strong {color:var(--accent)}
+
+footer strong {
+  color:var(--accent);
+}
+
 dialog {
   width:min(540px,calc(100vw - 24px));
   max-height:calc(100dvh - 30px);
@@ -179,7 +250,11 @@ dialog {
   border-radius:16px;
   padding:0;
 }
-dialog::backdrop {background:#000c}
+
+dialog::backdrop {
+  background:#000c;
+}
+
 .modal-header {
   display:flex;
   justify-content:space-between;
@@ -188,10 +263,27 @@ dialog::backdrop {background:#000c}
   border-bottom:1px solid var(--line);
   padding:15px;
 }
-.modal-header h2 {margin:0;color:var(--accent)}
-.modal-body {padding:17px;overflow:auto;max-height:70dvh}
-.modal-body p {color:var(--muted);line-height:1.6}
-.modal-body h3 {color:var(--accent)}
+
+.modal-header h2 {
+  margin:0;
+  color:var(--accent);
+}
+
+.modal-body {
+  padding:17px;
+  overflow:auto;
+  max-height:70dvh;
+}
+
+.modal-body p {
+  color:var(--muted);
+  line-height:1.6;
+}
+
+.modal-body h3 {
+  color:var(--accent);
+}
+
 kbd {
   display:inline-block;
   background:var(--panel2);
@@ -199,28 +291,58 @@ kbd {
   border-radius:5px;
   padding:3px 6px;
 }
-.hidden {display:none!important}
+
+.hidden {
+  display:none!important;
+}
+
 @media(max-width:600px) {
-  .app {padding:6px;gap:6px}
-  header {justify-content:center}
-  nav {justify-content:center}
-  nav button {padding:7px 10px;font-size:12px}
-  .brand img {width:36px;height:36px}
-  footer,.subtitle {display:none}
+  .app {
+    padding:6px;
+    gap:6px;
+  }
+
+  header {
+    justify-content:center;
+  }
+
+  nav {
+    justify-content:center;
+  }
+
+  nav button {
+    padding:7px 10px;
+    font-size:12px;
+  }
+
+  .brand img {
+    width:36px;
+    height:36px;
+  }
+
+  footer,.subtitle {
+    display:none;
+  }
 }
 </style>
 </head>
+
 <body>
 
 <div class="app">
+
   <header>
     <div class="brand">
       <img src="./3ds-racer.ico" alt="3DS Hub">
+
       <div>
         <h1>3DS Game Hub</h1>
-        <div class="subtitle">Nintendo 3DS · Browser Emulator</div>
+        <div class="subtitle">
+          Nintendo 3DS · Browser Emulator
+        </div>
       </div>
     </div>
+
     <nav>
       <button id="changeGame">Change Game</button>
       <button id="helpButton">Help</button>
@@ -231,27 +353,39 @@ kbd {
   <main class="workspace">
     <div id="screen">
       <div id="game"></div>
+
       <div id="welcome">
         <div class="welcome-content">
+
           <img src="./3ds-racer.ico" alt="">
+
           <h2>Your Games. Your Browser.</h2>
+
           <p>
             Choose a compatible Nintendo 3DS game file
             to play directly in your browser.
           </p>
+
           <label for="fileInput" class="pick-button">
             Choose 3DS Game
           </label>
-          <input id="fileInput" type="file"
-                 accept=".3ds,.cci,.cxi">
+
+          <input
+            id="fileInput"
+            type="file"
+            accept=".3ds,.cci,.cxi"
+          >
+
           <div id="status" role="status">
             Ready to select a game.
           </div>
+
           <div class="info">
             Supports compatible .3ds, .cci and .cxi files.
-            Your selected file stays on this device.
-            No game is uploaded to the website.
+            Your selected game stays on this device.
+            No ROM is uploaded to the website.
           </div>
+
         </div>
       </div>
     </div>
@@ -262,53 +396,58 @@ kbd {
     <span>Game: <strong id="currentGame">None</strong></span>
     <span>Engine: <strong>Azahar</strong></span>
   </footer>
+
 </div>
 
+<!-- HELP WINDOW -->
+
 <dialog id="helpDialog">
+
   <div class="modal-header">
     <h2>Help & Controls</h2>
     <button id="closeHelp">Close</button>
   </div>
+
   <div class="modal-body">
+
     <h3>Getting Started</h3>
     <p>
-      Choose your own compatible 3DS game file.
-      Wait while the emulator downloads its engine and starts.
-      Large games may take some time to initialize.
+      Choose a compatible Nintendo 3DS game file.
+      Wait for the emulator to load.
+      Larger games may take longer to initialize.
     </p>
 
     <h3>Controls</h3>
     <p>
-      Open the game toolbar to configure keyboard
-      and controller buttons. You can also access
-      the game's two screens and touch controls
-      through the emulator interface.
+      Use the game's toolbar to configure keyboard
+      and controller buttons.
+      Compatible controllers may be detected automatically.
     </p>
 
     <h3>Saving</h3>
     <p>
-      Save normally using the game's own menus.
-      Where supported, additional saving tools
-      are available in the game toolbar.
+      Save normally from inside your game.
+      Additional save tools may be available
+      through the game toolbar.
     </p>
 
     <h3>Performance</h3>
     <p>
-      Nintendo 3DS emulation requires a powerful device.
-      Close unnecessary tabs if performance is slow.
+      Nintendo 3DS emulation can be demanding.
+      Close unnecessary tabs if your game runs slowly.
     </p>
 
-    <h3>Useful Shortcuts</h3>
+    <h3>Shortcuts</h3>
     <p><kbd>Alt + Enter</kbd> Fullscreen</p>
     <p><kbd>Esc</kbd> Exit fullscreen</p>
 
     <h3>Compatibility</h3>
     <p>
-      Games must be in a format supported by the
-      Azahar browser core. Encrypted game images
-      may not boot. Save compatibility and
-      performance depend on the game and device.
+      Decrypted, compatible game images are generally
+      required. Not every 3DS game will run correctly,
+      and performance depends on your device.
     </p>
+
   </div>
 </dialog>
 
@@ -316,6 +455,7 @@ kbd {
 "use strict";
 
 const $ = id => document.getElementById(id);
+
 let loaded = false;
 let gameURL = null;
 
@@ -325,11 +465,14 @@ function status(message) {
 
 function hashGame(text) {
   let hash = 2166136261;
+
   for (let i = 0; i < text.length; i++) {
     hash = Math.imul(
-      hash ^ text.charCodeAt(i),16777619
+      hash ^ text.charCodeAt(i),
+      16777619
     );
   }
+
   return hash >>> 0;
 }
 
@@ -358,9 +501,10 @@ $("closeHelp").onclick = () => {
 $("changeGame").onclick = () => {
   if (loaded && !confirm(
     "Choose another game? Save your current progress first."
-  )) return;
+  )) {
+    return;
+  }
 
-  // Reload cleanly to avoid leaving two emulation cores running.
   if (loaded) {
     location.reload();
   } else {
@@ -369,30 +513,31 @@ $("changeGame").onclick = () => {
 };
 
 document.addEventListener("keydown",event => {
-  if (
-    event.altKey &&
-    event.key === "Enter"
-  ) {
+  if (event.altKey && event.key === "Enter") {
     event.preventDefault();
     fullscreen();
   }
 });
 
 $("fileInput").addEventListener("change",async event => {
+
   const file = event.target.files?.[0];
+
   if (!file || loaded) return;
 
   if (!/\.(3ds|cci|cxi)$/i.test(file.name)) {
-    status("Please choose a .3ds, .cci or .cxi file.");
+    status("Choose a .3ds, .cci or .cxi file.");
     return;
   }
 
-  if (!window.crossOriginIsolated ||
-      typeof SharedArrayBuffer === "undefined") {
+  if (
+    !window.crossOriginIsolated ||
+    typeof SharedArrayBuffer === "undefined"
+  ) {
     status(
-      "This browser is missing the security settings required " +
-      "for 3DS emulation. The website must be hosted with " +
-      "COOP and COEP headers. See the setup instructions."
+      "The browser security settings required for " +
+      "3DS emulation are not active. Check the site's " +
+      "COOP and COEP headers."
     );
     return;
   }
@@ -407,25 +552,36 @@ $("fileInput").addEventListener("change",async event => {
 
   $("currentGame").textContent = name;
 
-  // EmulatorJS configuration.
+  /* =====================================
+     EMULATORJS CONFIGURATION
+     ===================================== */
+
   window.EJS_player = "#game";
+
   window.EJS_core = "3ds";
+
   window.EJS_gameName = name;
 
-  // Stable numeric identifier for game saves.
   window.EJS_gameID = hashGame(
     file.name.toLowerCase() + ":" + file.size
   );
 
   window.EJS_gameUrl = gameURL;
-  window.EJS_pathtodata =
-    "https://cdn.emulatorjs.org/stable/data/";
 
-  // Azahar uses threaded WebAssembly.
+  /*
+    UPDATED:
+    Use nightly EmulatorJS files instead of stable.
+  */
+
+  window.EJS_pathtodata =
+    "https://cdn.emulatorjs.org/nightly/data/";
+
   window.EJS_threads = true;
 
   window.EJS_startOnLoaded = true;
+
   window.EJS_color = "#40d9ff";
+
   window.EJS_backgroundColor = "#080e1d";
 
   window.EJS_Buttons = {
@@ -444,7 +600,9 @@ $("fileInput").addEventListener("change",async event => {
   };
 
   const script = document.createElement("script");
-  script.src = window.EJS_pathtodata + "loader.js";
+
+  script.src =
+    window.EJS_pathtodata + "loader.js";
 
   script.onload = () => {
     $("welcome").classList.add("hidden");
@@ -452,14 +610,17 @@ $("fileInput").addEventListener("change",async event => {
 
   script.onerror = () => {
     loaded = false;
+
     status(
-      "Could not load the emulator engine. " +
+      "Unable to load EmulatorJS. " +
       "Check your internet connection."
     );
   };
 
   document.body.appendChild(script);
+
 });
 </script>
+
 </body>
 </html>
